@@ -118,7 +118,7 @@ const Index: NextPage = () => {
           </InputGroup>
           {signInError && (
             <Text color="#f80404" mt={5}>
-              Error, please enter the correct Email and Password
+              Hata, lütfen doğru E-posta ve Şifreyi girin
             </Text>
           )}
           <Button

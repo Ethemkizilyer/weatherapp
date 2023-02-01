@@ -43,9 +43,9 @@ const Index: NextPage = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (getToken()) routing.push(`/ankara`);
-  // }, []);
+  useEffect(() => {
+    if (getToken()) routing.push(`/ankara`);
+  }, []);
 
   return (
     <Flex

@@ -31,9 +31,9 @@ const NavBar = ({ city, setCity }: Props) => {
     e: React.FormEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
-    if (!getToken()) return routing.push(`/unauthorized`);
+    if (!getToken()) return routing.push(`/unauth`);
     if (!currentLatLng?.lat || !currentLatLng.lng)
-      return toast("insert both lat lng", {
+      return toast("lat ve lng girin", {
         type: "warning",
         position: "top-center",
       });
@@ -47,7 +47,7 @@ const NavBar = ({ city, setCity }: Props) => {
     e.preventDefault();
     if (!getToken()) return routing.push(`/unauthorized`);
     if (!currentCityName)
-      return toast("insert a city name", {
+      return toast("şehir girin", {
         type: "warning",
         position: "top-center",
       });
@@ -78,7 +78,7 @@ const NavBar = ({ city, setCity }: Props) => {
           color="primary.900"
           as="b"
         >
-          Search By Lat & Lng
+          Koordinat
         </Text>
         <InputGroup
           maxWidth={{ base: "35%", md: "30%", lg: "15%" }}
@@ -95,7 +95,7 @@ const NavBar = ({ city, setCity }: Props) => {
                 lng: currentLatLng?.lng,
               });
             }}
-            // value={currentLatLng.lat}
+            value={`${currentLatLng?.lat == null && ""}`}
           />
           <Input
             width={"33%"}
@@ -107,7 +107,7 @@ const NavBar = ({ city, setCity }: Props) => {
                 lng: e.target.value,
               });
             }}
-            // value={currentLatLng.lng}
+            value={`${currentLatLng?.lng == null && ""}`}
           />
           <Button
             isLoading={isLoading}
@@ -122,10 +122,7 @@ const NavBar = ({ city, setCity }: Props) => {
               bg: "#006eb9",
               transform: "scale(0.95)",
             }}
-            _focus={{
-              boxShadow:
-                "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
-            }}
+          
             onClick={handleSearchByLatLng}
           >
             <BsSearch size={"15px"} color="white" />
@@ -146,7 +143,7 @@ const NavBar = ({ city, setCity }: Props) => {
           color="primary.900"
           as="b"
         >
-          Search City Name
+          Şehir ismi
         </Text>
         <InputGroup
           maxWidth={{ base: "35%", md: "30%", lg: "15%" }}
@@ -157,7 +154,7 @@ const NavBar = ({ city, setCity }: Props) => {
         >
           <Input
             width={"66%"}
-            placeholder="City Name"
+            placeholder="Şehir"
             onChange={(e: any) => {
               setCurrentCityName(e.target.value);
             }}
@@ -176,10 +173,6 @@ const NavBar = ({ city, setCity }: Props) => {
             _active={{
               bg: "#006eb9",
               transform: "scale(0.95)",
-            }}
-            _focus={{
-              boxShadow:
-                "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
             }}
             onClick={handleSearchByName}
           >

@@ -6,13 +6,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Forecast } from "../types";
 import { getToken } from "../commons";
-import NavBar from "@/components/Navbar";
+import NavBar from "@/components/NavBar";
+import WeatherForecast from "@/components/Forecast";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
   const { params, query } = context;
   let error = false;
-
+console.log(params,query)
   await axios
     .get(
       `${
@@ -25,6 +26,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     .then(async (res) => {
       const now = new Date();
       const offset = now.getTimezoneOffset();
+      console.log(offset);
+      console.log(now.getTime());
+   console.log("asd"+
+     JSON.stringify(new Date(
+       now.getTime() + offset * 60 * 1000 + res.data.city.timezone * 1000
+     ))
+   );
       x = {
         name: res.data.city.name,
         weather: res.data.list[0].weather[0].main,
@@ -42,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         ),
         condition: res.data.list[0].weather[0].main,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
+          
           return {
             time: el.dt_txt.split(" ")[1].slice(0, -3),
             temp: el.main.temp.toFixed(1),
@@ -91,7 +100,7 @@ const Home: NextPage<Forecast> = ({
   const [city, setCity] = useState(name);
   const [long, setLong] = useState<any>("");
   const [lat, setLat] = useState<any>("");
-
+console.log(name);
   useEffect(() => {
     if (!getToken()) router.push(`/unauthorized`);
   }, []);
@@ -122,7 +131,12 @@ const Home: NextPage<Forecast> = ({
         alignItems="center"
         flexDirection="column"
       >
-       asd
+        <WeatherForecast
+          time={time}
+          temperature={temp}
+          location={name}
+          condition={condition}
+        />
         <Flex
           direction={{ base: "column", md: "column", lg: "row" }}
           justifyContent={{
@@ -134,11 +148,8 @@ const Home: NextPage<Forecast> = ({
           gap={{ base: 10, md: 10, lg: 40 }}
           marginTop={4}
         >
-          <Flex direction="column">
-asd
-      
-          </Flex>
-   asd
+          <Flex direction="column">asd</Flex>
+          asd
         </Flex>
       </Box>
     </Box>

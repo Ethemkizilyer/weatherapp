@@ -30,6 +30,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       const offset = now.getTimezoneOffset();
       console.log(offset);
       console.log(now.getTime());
+      console.log(res?.data.city.coord)
       console.log(
         "asd" +
           JSON.stringify(
@@ -47,6 +48,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         sunrise: res.data.city.sunrise,
         visibility: res.data.list[0].visibility,
         windDir: res.data.list[0].wind.deg,
+        late:res.data.city.coord.lat,
+        lon:res.data.city.coord.lon,
         windSpeed: res.data.list[0].wind.speed,
         time: JSON.stringify(
           new Date(
@@ -98,12 +101,14 @@ const Home: NextPage<Forecast> = ({
   windDir,
   windSpeed,
   condition,
+  lon,
+  late
 }: Forecast) => {
   const router = useRouter();
   const [city, setCity] = useState(name);
   const [long, setLong] = useState<any>("");
   const [lat, setLat] = useState<any>("");
-  console.log(name);
+
   useEffect(() => {
     if (!getToken()) router.push(`/unauthorized`);
   }, []);
@@ -127,7 +132,7 @@ const Home: NextPage<Forecast> = ({
       <Head>
         <title>Weather - {city}</title>
       </Head>
-      <NavBar setCity={setCity} city={city} />
+      <NavBar setCity={setCity} city={city} name={name} lon={lon} late={late} />
       <Box
         display="flex"
         justifyContent="center"

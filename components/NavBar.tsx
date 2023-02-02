@@ -15,13 +15,17 @@ import { getToken } from "../commons";
 type Props = {
   city: any;
   setCity: CallableFunction;
+  late?: number; 
+  lon?: number 
+  name?:string
+  
 };
 
-const NavBar = ({ city, setCity }: Props) => {
+const NavBar = ({ city, setCity,late,lon,name }: Props) => {
   const [currentLatLng, setCurrentLatLng] = useState<{
     lat?: number | null;
     lng?: number | null;
-  }>({ lat: null, lng: null });
+  }>({ lat: late, lng: lon});
   const [currentCityName, setCurrentCityName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const routing = useRouter();
@@ -40,7 +44,7 @@ const NavBar = ({ city, setCity }: Props) => {
     routing.push(
       `/searchByLatLng?lat=${currentLatLng?.lat}&lng=${currentLatLng?.lng}`
     );
-    setCurrentCityName("");
+    setCurrentCityName(name!);
   };
 
   const handleSearchByName = async (e: React.FormEvent<HTMLButtonElement>) => {
@@ -51,7 +55,7 @@ const NavBar = ({ city, setCity }: Props) => {
         type: "warning",
         position: "top-center",
       });
-    setCurrentLatLng({ lat: null, lng: null });
+    setCurrentLatLng({ lat: late, lng: lon });
     routing.push(`/${currentCityName}`);
   };
 
@@ -62,7 +66,9 @@ const NavBar = ({ city, setCity }: Props) => {
     Router.events.on("routeChangeComplete", () => {
       setIsLoading(false);
     });
-  }, []);
+    setCurrentLatLng({lat:late,lng:lon})
+    setCurrentCityName(name!)
+  }, [late,lon,name]);
 
   return (
     <>
@@ -95,7 +101,7 @@ const NavBar = ({ city, setCity }: Props) => {
                 lng: currentLatLng?.lng,
               });
             }}
-            value={`${currentLatLng?.lat == null && ""}`}
+            value={`${currentLatLng?.lat}`}
           />
           <Input
             width={"33%"}
@@ -107,7 +113,7 @@ const NavBar = ({ city, setCity }: Props) => {
                 lng: e.target.value,
               });
             }}
-            value={`${currentLatLng?.lng == null && ""}`}
+            value={`${currentLatLng?.lng}`}
           />
           <Button
             isLoading={isLoading}
@@ -122,7 +128,6 @@ const NavBar = ({ city, setCity }: Props) => {
               bg: "#006eb9",
               transform: "scale(0.95)",
             }}
-          
             onClick={handleSearchByLatLng}
           >
             <BsSearch size={"15px"} color="white" />

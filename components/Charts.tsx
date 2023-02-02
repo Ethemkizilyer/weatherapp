@@ -133,7 +133,7 @@ const Chart = ({ hourlyWeather, dailyWeather }: Props) => {
         max: Math.round(Math.max(...hourlyWeather!.map((o) => o.temp)) + 5),
 
         ticks: {
-          // forces step size to be 50 units
+          // Soldaki sayıların kaç adımdan başlayacağını 
 
           stepSize: 5,
         },

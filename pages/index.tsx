@@ -76,11 +76,11 @@ const Index: NextPage = () => {
         mx={[2, 3, 4]}
       >
         <Text textAlign="center" fontSize="4xl">
-          Log in
+        Kayıt
         </Text>
         <Flex direction="column">
           <Text textAlign="left" fontSize="medium" marginY="2">
-            Email <span style={{ color: "red" }}>*</span>
+            E-posta <span style={{ color: "red" }}>*</span>
             <i>{emailError && "Lütfen e-posta giriniz"}</i>
           </Text>
           <Input
@@ -95,8 +95,8 @@ const Index: NextPage = () => {
             type="email"
           />
           <Text textAlign="left" fontSize="medium" marginY="2">
-            Password <span style={{ color: "red" }}>*</span>
-            <i>{passwordError && "Lütfen min 6 hane password giriniz"}</i>
+            Şifre <span style={{ color: "red" }}>*</span>
+            <i>{passwordError && "Lütfen min 6 haneli password giriniz"}</i>
           </Text>
           <InputGroup>
             <Input
@@ -138,7 +138,7 @@ const Index: NextPage = () => {
             }}
             onClick={handleLogin}
           >
-            Login
+            Giriş
           </Button>
           <Flex
             gap={["20px", "20px", "40px"]}

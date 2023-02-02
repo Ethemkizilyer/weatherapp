@@ -8,12 +8,14 @@ import { Forecast } from "../types";
 import { getToken } from "../commons";
 import NavBar from "@/components/NavBar";
 import WeatherForecast from "@/components/Forecast";
+import Container from "@/components/Container";
+import Charts from "@/components/Charts";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   let x = {} as Forecast;
   const { params, query } = context;
   let error = false;
-console.log(params,query)
+  console.log(params, query);
   await axios
     .get(
       `${
@@ -28,11 +30,14 @@ console.log(params,query)
       const offset = now.getTimezoneOffset();
       console.log(offset);
       console.log(now.getTime());
-   console.log("asd"+
-     JSON.stringify(new Date(
-       now.getTime() + offset * 60 * 1000 + res.data.city.timezone * 1000
-     ))
-   );
+      console.log(
+        "asd" +
+          JSON.stringify(
+            new Date(
+              now.getTime() + offset * 60 * 1000 + res.data.city.timezone * 1000
+            )
+          )
+      );
       x = {
         name: res.data.city.name,
         weather: res.data.list[0].weather[0].main,
@@ -50,7 +55,6 @@ console.log(params,query)
         ),
         condition: res.data.list[0].weather[0].main,
         hourlyWeather: res.data.list.slice(1, 8).map((el: any) => {
-          
           return {
             time: el.dt_txt.split(" ")[1].slice(0, -3),
             temp: el.main.temp.toFixed(1),
@@ -100,7 +104,7 @@ const Home: NextPage<Forecast> = ({
   const [city, setCity] = useState(name);
   const [long, setLong] = useState<any>("");
   const [lat, setLat] = useState<any>("");
-console.log(name);
+  console.log(name);
   useEffect(() => {
     if (!getToken()) router.push(`/unauthorized`);
   }, []);
@@ -115,9 +119,9 @@ console.log(name);
     navigator.geolocation.getCurrentPosition(success);
   }, [long, lat]);
 
-//   useEffect(() => {
-//     if (city) router.push(`/${city}`);
-//   }, [city]);
+  //   useEffect(() => {
+  //     if (city) router.push(`/${city}`);
+  //   }, [city]);
 
   return (
     <Box bgColor="primary.100" minHeight="100%">
@@ -148,8 +152,16 @@ console.log(name);
           gap={{ base: 10, md: 10, lg: 40 }}
           marginTop={4}
         >
-          <Flex direction="column">asd</Flex>
-          asd
+          <Flex >
+            <Container
+              windDir={windDir!}
+              windSpeed={windSpeed!}
+              humidity={humidity!}
+              sunrise={sunrise!}
+              sunset={sunset!}
+            />
+          </Flex>
+          <Charts />
         </Flex>
       </Box>
     </Box>

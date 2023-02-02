@@ -65,7 +65,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
           .map((el: any) => {
             return {
               time: el.dt,
-              //time: el.dt_txt.split(" ")[0],
               temp: el.main.temp.toFixed(0),
               condition: el.weather[0].main,
             };
@@ -152,7 +151,7 @@ const Home: NextPage<Forecast> = ({
           gap={{ base: 10, md: 10, lg: 40 }}
           marginTop={4}
         >
-          <Flex >
+          <Flex>
             <Container
               windDir={windDir!}
               windSpeed={windSpeed!}
@@ -161,7 +160,7 @@ const Home: NextPage<Forecast> = ({
               sunset={sunset!}
             />
           </Flex>
-          <Charts />
+          <Charts hourlyWeather={hourlyWeather!} dailyWeather={dailyWeather!} />
         </Flex>
       </Box>
     </Box>

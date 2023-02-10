@@ -87,7 +87,7 @@ const NavBar = ({ city, setCity,late,lon,name }: Props) => {
           Koordinat
         </Text>
         <InputGroup
-          maxWidth={{ base: "35%", md: "30%", lg: "15%" }}
+          maxWidth={{ base: "35%", md: "30%", lg: "25%" }}
           mr={[5, 10, 10]}
           position="relative"
           ref={ref}
@@ -151,7 +151,7 @@ const NavBar = ({ city, setCity,late,lon,name }: Props) => {
           Şehir ismi
         </Text>
         <InputGroup
-          maxWidth={{ base: "35%", md: "30%", lg: "15%" }}
+          maxWidth={{ base: "35%", md: "30%", lg: "25%" }}
           mr={[5, 10, 10]}
           justifyContent="end"
           position="relative"
